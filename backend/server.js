@@ -15,7 +15,10 @@ const app = express()
 // MIDDLEWARES
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cors({
+  origin: "https://ecommerce-server-sigma-jade.vercel.app",
+  credentials: true
+}));
 
 // CONFIGS
 connectToDb(`${process.env.MONGO_URI}/e-commerce`)

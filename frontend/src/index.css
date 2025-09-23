@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
+@import "tailwindcss";
+
+*{
+    font-family: "Outfit", sans-serif;
+}
+
+.prata-font{
+    font-family: "Prata", serif;
+}
+
+a.active hr{
+    display: block;
+}
+
+@media (max-width : 640px) {
+    a.active{
+        background-color: black;
+        color: white;
+    }
+}
+
+/* App.css */
+.custom-toast {
+  font-family: "Outfit", sans-serif;
+  background: #1f1f1f !important;  /* dark gray/black */
+  color: #fff !important;          /* white text */
+  border-radius: 12px !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  max-width: 280px;                /* not full width */
+  margin: 0 auto;   
+  margin-top: 4px;               /* center on mobile */
+}
+
+.custom-toast-body {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

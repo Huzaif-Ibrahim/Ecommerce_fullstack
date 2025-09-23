@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <nav className='py-5 flex items-center justify-between border-b border-gray-400 font-medium'>
       <Link to={'/'} >
-        <img src={assets.logo} alt="logo" className='w-36' />
+        <img src={assets.logo} alt="logo" className='lg:w-36 w-26' />
       </Link>
 
       <ul className='hidden sm:flex gap-5 text-sm text-gray-700 uppercase'>

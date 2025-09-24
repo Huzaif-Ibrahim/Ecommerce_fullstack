@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import Title from './Title'
 import { ShopContext } from '../context/ShopContext'
 import ProductCard from './ProductCard'
+import LoadingCard from './LoadingCard'
 
 const BestSeller = () => {
 
-    const { products } = useContext(ShopContext)
+    const { products, productsLoading } = useContext(ShopContext)
 
     const [bestSeller, setBestSeller] = useState([])
 
@@ -25,7 +26,10 @@ const BestSeller = () => {
         </div>
 
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 px-4 md:px-16'>
-            {
+            {   
+                productsLoading ? ([...Array(5)].map(_ => {
+                    return <LoadingCard/>
+                })) : 
                 bestSeller.map((e, indx) => {
                     return <ProductCard key={indx} id={e._id} productPrice={e.price} productTitle={e.name} imgSrc={e.image[0]} />
                 })

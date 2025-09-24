@@ -79,3 +79,14 @@ export const adminLogin = async (req,res) => {
         res.json({ success : false, message:error.message })
     }
 }
+
+export const checkLogin = (req, res) => {
+    try {
+        const { userId } = req.body
+        if(!userId) return res.json({ success: false, message: 'Signup to order' })
+        
+        res.json({ success: true })
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}

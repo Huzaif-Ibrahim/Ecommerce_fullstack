@@ -1,14 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
+import { backendUrl, ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import CartRow from '../components/CartRow'
 import CartTotals from '../components/CartTotals'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const Cart = () => {
 
-  const { products, cartItem, navigate } = useContext(ShopContext)
+  const { products, cartItem, navigate, token } = useContext(ShopContext)
 
   const [cartData, setCartData] = useState([])
+
+  const checkLogin = async () => {
+    try {
+      const response = await axios.post(backendUrl + '/api/user/checklogin',{},{headers: {token}})
+
+      if(!response.data.success){
+        navigate('/login')
+        toast.info(response.data.message)
+      } else {
+        navigate('/place-order')
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
 
   useEffect(() => {
     if (products.length > 0) {
@@ -49,7 +67,7 @@ const Cart = () => {
               <div className='flex flex-col w-full items-end'>
                 <div className='max-w-sm w-full'><CartTotals /></div>
                 <div className='mt-6 w-full flex justify-end'>
-                  <button onClick={() => navigate('/place-order')} className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer'>proceed to checkout</button>
+                  <button onClick={() => checkLogin()} className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer'>proceed to checkout</button>
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import Title from '../components/Title'
 import { ShopContext } from '../context/ShopContext'
 import ProductCard from '../components/ProductCard'
 import { assets } from '../assets/assets'
+import LoadingCard from '../components/LoadingCard'
 
 const Collection = () => {
 
@@ -116,12 +117,9 @@ const Collection = () => {
 
           <div className={`grid grid-cols-2 gap-4 md:gap-6 md:grid-cols-3 lg:grid-cols-4`}>
             {
-              productsLoading ? ([...Array(5)].map(_ => <div className='flex flex-col w-full gap-1 h-fit'>
-                <div className='h-64 w-full bg-gray-400 animate-pulse'></div>
-                <div className='h-8 w-2/3 bg-gray-400 animate-pulse'></div>
-                <div className='h-8 w-3 bg-gray-400 animate-pulse'></div>
-
-              </div>)) : filteredProducts.length > 0 ? filteredProducts.map((e, indx) => {
+              productsLoading ? ([...Array(5)].map(_ => 
+                  <LoadingCard />
+              )) : filteredProducts.length > 0 ? filteredProducts.map((e, indx) => {
                 return <ProductCard key={indx} id={e._id} imgSrc={e.image[0]} productPrice={e.price} productTitle={e.name} />
               }) : <p>SORRY🙁, No product Found...</p>
             }

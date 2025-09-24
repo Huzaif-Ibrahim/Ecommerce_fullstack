@@ -12,6 +12,7 @@ const PlaceOrder = () => {
   const { navigate, token, cartItem, setCartItem, products, delivary_fee, subTotal } = useContext(ShopContext)
 
   const [method, setMethod] = useState('cod')
+  const [submitLoading, setSubmitLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     firstname: '',
@@ -28,7 +29,7 @@ const PlaceOrder = () => {
   const onChangeHandler = (e) => {
     const name = e.target.name
     const value = e.target.value
-    setFormData(data => ({...data, [name]: value}))
+    setFormData(data => ({ ...data, [name]: value }))
   }
 
   const initPay = (order) => {
@@ -43,8 +44,8 @@ const PlaceOrder = () => {
       handler: async (response) => {
         console.log(response)
         try {
-          const {data} = await axios.post(backendUrl + '/api/order/verifyRazorpay', response, {headers:{token}})
-          if(data.success){
+          const { data } = await axios.post(backendUrl + '/api/order/verifyRazorpay', response, { headers: { token } })
+          if (data.success) {
             navigate('/orders')
             setCartItem({})
           }
@@ -60,14 +61,15 @@ const PlaceOrder = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
+    setSubmitLoading(true)
     try {
       let orderItems = []
 
-      for(const items in cartItem){
-        for(const item in cartItem[items]){
-          if(cartItem[items][item] > 0){
+      for (const items in cartItem) {
+        for (const item in cartItem[items]) {
+          if (cartItem[items][item] > 0) {
             let itemInfo = structuredClone(products.find(elem => elem._id === items))
-            if(itemInfo){
+            if (itemInfo) {
               itemInfo.size = item
               itemInfo.quantity = cartItem[items][item]
               orderItems.push(itemInfo)
@@ -82,30 +84,33 @@ const PlaceOrder = () => {
         amount: subTotal() + delivary_fee
       }
 
-      switch (method){
+      switch (method) {
         case 'cod':
-          const response = await axios.post(backendUrl + '/api/order/place', orderData, {headers: {token}})
-          if(response.data.success){
+          const response = await axios.post(backendUrl + '/api/order/place', orderData, { headers: { token } })
+          if (response.data.success) {
             setCartItem({})
             navigate('/orders', { state: { refresh: true } })
             toast.success(response.data.message)
           } else {
-            toast.error('An error occures!')
+            toast.info('Sign up to order')
+            navigate('/login')
           }
           break
 
         case 'razorpay':
-          const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, { headers: {token} })
-          if(responseRazorpay.data.success){
+          const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, { headers: { token } })
+          if (responseRazorpay.data.success) {
             initPay(responseRazorpay.data.order)
           }
           break
-        
+
         default:
           break
       }
     } catch (error) {
       console.log(error)
+    }finally{
+      setSubmitLoading(false)
     }
   }
 
@@ -120,20 +125,20 @@ const PlaceOrder = () => {
 
             <div className='flex flex-col gap-4 md:gap-6 w-full mt-2 md:mt-6'>
               <div className="flex gap-4 flex-row w-full">
-                <input required onChange={onChangeHandler} value={formData.firstname} name='firstname' type="text" placeholder='First name' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
-                <input required onChange={onChangeHandler} value={formData.lastname} name='lastname' type="text" placeholder='Last name' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
+                <input required onChange={onChangeHandler} value={formData.firstname} name='firstname' type="text" placeholder='First name' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
+                <input required onChange={onChangeHandler} value={formData.lastname} name='lastname' type="text" placeholder='Last name' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
               </div>
-              <input required onChange={onChangeHandler} value={formData.email} name='email' type="email" placeholder='Email adress' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]'/>
-              <input required onChange={onChangeHandler} value={formData.street} name='street' type="text" placeholder='Street' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]'/>
+              <input required onChange={onChangeHandler} value={formData.email} name='email' type="email" placeholder='Email adress' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]' />
+              <input required onChange={onChangeHandler} value={formData.street} name='street' type="text" placeholder='Street' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]' />
               <div className="flex gap-4 flex-row w-full">
-                <input required onChange={onChangeHandler} value={formData.city} name='city' type="text" placeholder='City' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
-                <input required onChange={onChangeHandler} value={formData.state} name='state' type="text" placeholder='State' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
+                <input required onChange={onChangeHandler} value={formData.city} name='city' type="text" placeholder='City' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
+                <input required onChange={onChangeHandler} value={formData.state} name='state' type="text" placeholder='State' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
               </div>
               <div className="flex gap-4 flex-row w-full">
-                <input required onChange={onChangeHandler} value={formData.zipcode} name='zipcode' type="text" placeholder='Zip code' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
-                <input required onChange={onChangeHandler} value={formData.country} name='country' type="text" placeholder='Country' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full'/>
+                <input required onChange={onChangeHandler} value={formData.zipcode} name='zipcode' type="text" placeholder='Zip code' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
+                <input required onChange={onChangeHandler} value={formData.country} name='country' type="text" placeholder='Country' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434] w-full' />
               </div>
-              <input required onChange={onChangeHandler} value={formData.phone} name='phone' type="text" placeholder='Phone' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]'/>
+              <input required onChange={onChangeHandler} value={formData.phone} name='phone' type="text" placeholder='Phone' className='outline-0 rounded-sm border border-[#C5C5C5] p-2 text-[#343434]' />
             </div>
           </div>
 
@@ -160,7 +165,32 @@ const PlaceOrder = () => {
                 </div>
               </div>
               <div className='flex justify-end mt-6'>
-                <button type='submit' className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer'>place order</button>
+                <button type='submit' className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer' >
+                  {submitLoading ? (
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
+                  ) : (
+                    "Place Order"
+                  )}
+                </button>
               </div>
             </div>
           </div>

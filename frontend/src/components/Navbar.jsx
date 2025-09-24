@@ -73,7 +73,7 @@ const Navbar = () => {
         </div>
 
         <div className='group relative block lg:hidden'>
-          <div className="flex items-center gap-1" onClick={() => setAccountMenu(!accountMenu)}>
+          <div className="flex items-center gap-1" onClick={() => token && setAccountMenu(!accountMenu)}>
             <img src={assets.profile_icon} onClick={() => !token && navigate('/login')} className='w-5 cursor-pointer' alt="profile" />
           </div>
 
@@ -83,7 +83,7 @@ const Navbar = () => {
               <div className="flex flex-col font-light items-center w-32 bg-gray-50 text-gray-600 px-4">
                 <p onClick={()=>setAccountMenu(false)} className='hover:text-black cursor-pointer py-3 w-full border-b border-zinc-200'>My Profile</p>
                 <p onClick={() => {navigate('/orders'); setAccountMenu(false)}} className='hover:text-black cursor-pointer py-3 w-full border-b border-zinc-200'>Orders</p>
-                <p className='text-red-500 cursor-pointer py-3 w-full border-b border-zinc-200' onClick={logout}>Logout</p>
+                <p className='text-red-500 cursor-pointer py-3 w-full border-b border-zinc-200' onClick={() => {logout(); setAccountMenu(false) }}>Logout</p>
               </div>
             </div>
           }

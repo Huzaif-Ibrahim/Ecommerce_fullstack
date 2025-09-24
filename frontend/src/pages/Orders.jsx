@@ -4,6 +4,7 @@ import Title from '../components/Title'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
+import CartLoading from '../components/CartLoading'
 
 const Orders = () => {
 
@@ -12,8 +13,10 @@ const Orders = () => {
   const location = useLocation()
 
   const [orders, setOrders] = useState([])
+  const [orderLoading, setOrderLoading] = useState(false)
 
   const fetchOrders = async () => {
+    setOrderLoading(true)
     try {
       if(!token){
         return null
@@ -37,6 +40,8 @@ const Orders = () => {
       }
     } catch (error) {
       toast.error(error.message)
+    } finally {
+      setOrderLoading(false)
     }
   }
 
@@ -52,6 +57,9 @@ const Orders = () => {
         
               <div className='flex flex-col border-t border-gray-300 my-4'>
                 {
+                  orderLoading ? ([...Array(3)].map(_ => {
+                    return <CartLoading />
+                  })) : orders.length > 0 ? 
                   orders.map((item, indx) => {
                     return <div key={indx} className='border-b border-gray-300 py-4 flex justify-between items-center'>
                                 <div className='flex gap-3 md:gap-6 w-[300px] lg:w-[450px]'>
@@ -82,7 +90,7 @@ const Orders = () => {
                                   Track Order
                                 </button>
                             </div>
-                  })
+                  }) : <p className='text-lg font-semibold text-[#707070] my-4 py-4'>No Orders...</p>
                 }
               </div>
             </div>

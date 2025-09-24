@@ -80,7 +80,7 @@ const Navbar = () => {
 
 
           {
-            accountMenu && <div className={`absolute shadow dropdown-menu right-0 pt-3`}>
+            accountMenu && <div className={`absolute shadow dropdown-menu right-0`}>
               <div className="flex flex-col font-light items-center w-32 bg-gray-50 text-gray-600 px-4">
                 <p className='hover:text-black cursor-pointer py-3 w-full border-b border-zinc-200'>My Profile</p>
                 <p onClick={() => navigate('/orders')} className='hover:text-black cursor-pointer py-3 w-full border-b border-zinc-200'>Orders</p>

@@ -75,7 +75,6 @@ const Navbar = () => {
         <div className='group relative block lg:hidden'>
           <div className="flex items-center gap-1" onClick={() => setAccountMenu(!accountMenu)}>
             <img src={assets.profile_icon} onClick={() => !token && navigate('/login')} className='w-5 cursor-pointer' alt="profile" />
-            {token && <img src={assets.dropdown_icon} className={`w-1.5 ${accountMenu ? '-rotate-90' : 'rotate-90'} transition-all duration-500`} alt="" />}
           </div>
 
 

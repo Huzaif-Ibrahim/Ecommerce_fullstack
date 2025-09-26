@@ -49,7 +49,7 @@ const Orders = ({ token }) => {
     <div className='bg-gray-50 p-4 lg:p-12 text-gray-700'>
       <p className='text-gray-700 text-lg mb-4 uppercase'>Orders</p>
       {
-        orders.map((item, key) => {
+        orders.reverse().map((item, key) => {
           return <div key={key} className='grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr_1fr_1fr] gap-2 border border-gray-400 p-4 rounded-lg mb-4'>
             <img src={assets.parcel_icon} className='h-32' alt="" />
 

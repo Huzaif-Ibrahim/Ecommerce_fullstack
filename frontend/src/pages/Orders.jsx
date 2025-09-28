@@ -96,7 +96,7 @@ const Orders = () => {
         }
       </div>
 
-      <p className='mt-16 pt-2 text-gray-600 border-t border-gray-400'>Cancelled Orders</p>
+      <p className='mt-16 pt-2 text-gray-600 border-t border-gray-400'>Cancelled Orders ({orders.filter(data => data.status.includes('cancelled')).length})</p>
       {
         orders.filter(data => data.status.includes('cancelled')).map((item, indx) => {
           return <div key={indx} className='relative opacity-50 border-b border-gray-300 py-4 flex justify-between items-center'>

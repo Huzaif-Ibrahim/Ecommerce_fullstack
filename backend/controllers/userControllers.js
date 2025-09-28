@@ -90,3 +90,18 @@ export const checkLogin = (req, res) => {
         res.json({ success: false, message: error.message })
     }
 }
+
+export const getProfileData = async (req, res) => {
+    try {
+        const { userId } = req.body
+        if(!userId) return res.json({success: false, message: 'User data unavailable'})
+
+        const user = await userModel.findById( userId )
+        if(!user) return res.json({ success: false, message: 'Please refresh the page.' })
+        
+        res.json({ success: true, user })
+
+    } catch (error) {
+        res.json({ success: false, message: error.message })
+    }
+}

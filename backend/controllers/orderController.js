@@ -125,6 +125,22 @@ export const updateStatus = async (req, res) => {
 
 }
 
+export const deleteCancelledOrder = async (req, res) => {
+    try {
+        const { orderId } = req.body
+        const order = await orderModel.findById(orderId)
+
+        if(!order) return res.json({ success: false, message: 'Order not found.' })
+
+        await orderModel.findByIdAndDelete(orderId)
+
+        res.json({ success: true, message: 'Removed successfully.' })
+    } catch (error) {
+        res.json({ success: false, message:error.message })
+    }
+}
+
+
 // Orders of perticular user
 export const userOrders = async (req, res) => {
     try {

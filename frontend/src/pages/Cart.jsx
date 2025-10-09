@@ -27,7 +27,7 @@ const Cart = () => {
     } catch (error) {
       console.log(error)
       toast.error(error.message)
-    } finally {
+    } finally{
       setProceedLoading(false)
     }
   }

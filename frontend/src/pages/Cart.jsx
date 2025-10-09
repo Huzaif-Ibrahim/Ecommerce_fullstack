@@ -11,8 +11,10 @@ const Cart = () => {
   const { products, cartItem, navigate, token } = useContext(ShopContext)
 
   const [cartData, setCartData] = useState([])
+  const [proceedLoading, setProceedLoading] = useState(false)
 
   const checkLogin = async () => {
+    setProceedLoading(true)
     try {
       const response = await axios.post(backendUrl + '/api/user/checklogin',{},{headers: {token}})
 
@@ -25,6 +27,8 @@ const Cart = () => {
     } catch (error) {
       console.log(error)
       toast.error(error.message)
+    } finally {
+      setProceedLoading(false)
     }
   }
 
@@ -67,7 +71,9 @@ const Cart = () => {
               <div className='flex flex-col w-full items-end'>
                 <div className='max-w-sm w-full'><CartTotals /></div>
                 <div className='mt-6 w-full flex justify-end'>
-                  <button onClick={() => checkLogin()} className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer'>proceed to checkout</button>
+                  <button onClick={() => checkLogin()} className='px-4 py-2 bg-black text-white uppercase text-sm cursor-pointer'>{
+                    proceedLoading ? 'Please wait...' : 'proceed to checkout'
+                    }</button>
                 </div>
               </div>
             </div>

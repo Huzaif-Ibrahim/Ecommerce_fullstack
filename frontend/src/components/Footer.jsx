@@ -28,8 +28,8 @@ const Footer = () => {
                 <div className='flex flex-col gap-6'>
                     <p className='hidden lg:block text-[#5A5A5A] font-semibold text-lg'>GET IN TOUCH</p>
                     <ul className='flex lg:flex-col gap-3 text-[#595959] font-normal'>
-                        <li >+1-212-456-7890</li>
-                        <li>greatstackdev@gmail.com</li>
+                        <li >+91 96068 94825</li>
+                        <li>i.huzaif.ibrahim@gmail.com</li>
                     </ul>
                 </div>
                 </div>
@@ -38,7 +38,7 @@ const Footer = () => {
 
 
             <div className='py-4 flex items-center justify-center'>
-                <p className='text-[#595959] text-sm text-center'>Copyright 2024 © GreatStack.dev - All Right Reserved.</p>
+                <p className='text-[#595959] text-sm text-center'>Copyright 2024 ©huz4ifibrahim - All Right Reserved.</p>
             </div>
         </div>
     )

@@ -1,7 +1,6 @@
 # E-Commerce Website (MERN Stack)
 
-A full-stack e-commerce web application built using the **MERN stack**, featuring **role-based authentication (User & Admin)** and **Razorpay** integration for secure online payments.  
-This project was created to understand how real-world e-commerce systems work from frontend to backend.
+A full-stack e-commerce web application built using the **MERN stack**, featuring **role-based authentication (User & Admin)**, **admin dashboard**, and **Razorpay** integration for secure online payments.
 
 ---
 
@@ -11,13 +10,19 @@ This project was created to understand how real-world e-commerce systems work fr
 - User authentication (signup & login)
 - Role-based access control:
   - **User**: browse products, manage cart, place orders
-  - **Admin**: manage products and orders
+  - **Admin**: manage products, orders, and users via the **Admin Dashboard**
 - Protected routes based on user roles
 
 ### 🛒 E-Commerce Functionality
 - Product listing and product details
 - Add to cart and cart management
 - Order placement and order history
+
+### 🖥️ Admin Dashboard
+- View and manage all products
+- Approve, edit, or delete orders
+- Moderate users and comments (if applicable)
+- Full control over platform content via a dedicated dashboard
 
 ### 💳 Payments
 - Secure online payments using **Razorpay**
@@ -47,7 +52,7 @@ This project was created to understand how real-world e-commerce systems work fr
 - Authentication handled using JWT
 - Middleware ensures:
   - Only authenticated users can access protected routes
-  - Only admins can access admin-specific APIs
+  - Only admins can access admin-specific APIs and the **Admin Dashboard**
 - Improves security and mirrors real-world application design
 
 ---
